@@ -1,20 +1,20 @@
-# 📦 Publishing AxiomX - Step-by-Step Guide
+# Publishing AxiomX - Step-by-Step Guide
 
 Complete checklist to package and publish AxiomX for maximum recruiter visibility.
 
 ---
 
-## 🎯 Goal
+## Goal
 
 Transform your GitHub repository into a professional portfolio piece that:
-- ✅ Demonstrates your technical skills clearly
-- ✅ Is easy for recruiters to understand (even non-technical ones)
-- ✅ Can be run/tested without complex setup
-- ✅ Costs $0 in ongoing hosting fees
+- Demonstrates your technical skills clearly
+- Is easy for recruiters to understand (even non-technical ones)
+- Can be run/tested without complex setup
+- Costs $0 in ongoing hosting fees
 
 ---
 
-## ✅ Pre-Publishing Checklist
+## Pre-Publishing Checklist
 
 ### Repository Cleanup
 - [ ] Remove any personal API keys or secrets
@@ -38,7 +38,7 @@ Transform your GitHub repository into a professional portfolio piece that:
 
 ---
 
-## 📅 Day 1: Repository Setup (30 minutes)
+## Day 1: Repository Setup (30 minutes)
 
 ### Step 1: Add License (5 minutes)
 
@@ -62,7 +62,7 @@ Or use GitHub's "Add file" → "Create new file" → Name it "LICENSE" → Choos
 3. Pull Requests: Enable "Automatically delete head branches"
 
 **About Section:**
-1. Click ⚙️ next to "About"
+1. Click the gear icon next to "About"
 2. Description (from ABOUT_SUMMARIES.md):
    ```
    High-performance cryptocurrency matching engine built with Go, Kafka & Kubernetes. 1000+ orders/sec, sub-5ms latency.
@@ -108,22 +108,22 @@ Or use GitHub's "Add file" → "Create new file" → Name it "LICENSE" → Choos
 
 **Release Description Template:**
 ```markdown
-# 🎉 AxiomX v1.0.0 - Production Ready
+# AxiomX v1.0.0 - Production Ready
 
 High-performance cryptocurrency matching engine handling **1,000+ orders/second** with **sub-5ms P95 latency**.
 
-## ⚡ Quick Start (One Command)
+## Quick Start (One Command)
 
 \`\`\`bash
 docker-compose up -d
 \`\`\`
 
 Then visit:
-- 🔗 API: http://localhost:8081/health
-- 📊 Grafana: http://localhost:3000 (admin/admin)
-- 📈 Prometheus: http://localhost:9090
+- API: http://localhost:8081/health
+- Grafana: http://localhost:3000 (admin/admin)
+- Prometheus: http://localhost:9090
 
-## 📊 Performance (Verified)
+## Performance (Verified)
 
 Load tested with k6 on March 1, 2026:
 
@@ -137,7 +137,7 @@ Load tested with k6 on March 1, 2026:
 
 Full metrics: [k6-heavy-summary.json](https://github.com/yourusername/AxiomX/releases/download/v1.0.0/k6-heavy-summary.json)
 
-## 🛠️ What's Included
+## What's Included
 
 - **Matching Engine**: In-memory order book with price-time priority
 - **Event Streaming**: Kafka for reliable event distribution
@@ -147,7 +147,7 @@ Full metrics: [k6-heavy-summary.json](https://github.com/yourusername/AxiomX/rel
 - **Infrastructure**: Kubernetes (Helm) + Terraform + Ansible
 - **Load Tests**: k6 scripts with verified results
 
-## 🎯 For Recruiters
+## For Recruiters
 
 See [RECRUITER_GUIDE.md](https://github.com/yourusername/AxiomX/blob/main/RECRUITER_GUIDE.md) for:
 - Technical highlights explained
@@ -155,7 +155,7 @@ See [RECRUITER_GUIDE.md](https://github.com/yourusername/AxiomX/blob/main/RECRUI
 - 30-second demo instructions
 - Answers to common questions
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 **Backend**: Go 1.23  
 **Streaming**: Apache Kafka 7.5  
@@ -163,26 +163,26 @@ See [RECRUITER_GUIDE.md](https://github.com/yourusername/AxiomX/blob/main/RECRUI
 **Observability**: Prometheus, Grafana, Loki  
 **Infrastructure**: Kubernetes, Docker, Terraform, Helm, Ansible  
 
-## 📚 Documentation
+## Documentation
 
 - [README](https://github.com/yourusername/AxiomX/blob/main/README.md) - Full documentation
 - [Deployment Guide](https://github.com/yourusername/AxiomX/blob/main/DEPLOYMENT_GUIDE.md) - How to deploy
 - [API Documentation](https://github.com/yourusername/AxiomX/blob/main/docs/API_README.md) - API reference
 
-## 📝 License
+## License
 
 MIT License - see [LICENSE](https://github.com/yourusername/AxiomX/blob/main/LICENSE)
 
 ---
 
-⭐ **Star this repo if you find it useful!**
+**Star this repo if you find it useful!**
 \`\`\`
 
 3. Click "Publish release"
 
 ---
 
-## 📅 Day 2: Docker Image Publishing (20 minutes)
+## Day 2: Docker Image Publishing (20 minutes)
 
 ### Prerequisites
 - Docker Desktop running
@@ -232,7 +232,7 @@ Add this comment at the top:
 
 ---
 
-## 📅 Day 3: Portfolio Integration (45 minutes)
+## Day 3: Portfolio Integration (45 minutes)
 
 ### Update Resume
 
@@ -256,7 +256,7 @@ AxiomX Trading Engine | Go, Kafka, Kubernetes, PostgreSQL          [GitHub ↗]
    ```
    Production-ready cryptocurrency matching engine built with Go, Kafka, and Kubernetes.
    
-   🎯 Key Achievements:
+   Key Achievements:
    • Processes 1,000+ orders per second with sub-5ms latency
    • Handles 253K+ requests in load tests with 0% error rate
    • Complete cloud-native deployment with Kubernetes and Terraform
@@ -294,7 +294,7 @@ Built with Go, Kafka, and Kubernetes. Full production deployment with observabil
 
 ---
 
-## 📅 Day 4: Optional Enhancements
+## Day 4: Optional Enhancements
 
 ### Create Demo Video (30-60 minutes)
 
@@ -327,7 +327,7 @@ Take screenshots of:
 3. Prometheus targets page
 4. Kubernetes pods (if deployed)
 
-Add to README in an "## 📸 Screenshots" section
+Add to README in an "## Screenshots" section
 
 ### Create GitHub Actions Workflow (Optional)
 
@@ -352,7 +352,7 @@ jobs:
 
 ---
 
-## 🎯 Target Companies Customization
+## Target Companies Customization
 
 ### For FinTech (Stripe, Square, Coinbase)
 **Emphasize:**
@@ -386,7 +386,7 @@ jobs:
 
 ---
 
-## 📊 Tracking Success
+## Tracking Success
 
 ### Analytics to Monitor
 
@@ -403,10 +403,10 @@ jobs:
 ### Success Metrics
 
 After 2 weeks, you should see:
-- 🎯 50-100+ GitHub views
-- 🎯 5-10+ stars
-- 🎯 3-5+ clones
-- 🎯 LinkedIn post reach: 500-1000+ views
+- 50-100+ GitHub views
+- 5-10+ stars
+- 3-5+ clones
+- LinkedIn post reach: 500-1000+ views
 
 If lower:
 - Share on LinkedIn with technical writing
@@ -415,7 +415,7 @@ If lower:
 
 ---
 
-## ✅ Final Checklist
+## Final Checklist
 
 Before sharing with anyone:
 
@@ -450,7 +450,7 @@ Before sharing with anyone:
 
 ---
 
-## 🚀 Ready to Ship
+## Ready to Ship
 
 You're now ready to share AxiomX with recruiters and hiring managers!
 
@@ -470,7 +470,7 @@ I'd love to discuss how my experience building distributed systems applies to
 
 **On LinkedIn Posts:**
 ```
-🚀 Excited to share AxiomX, my latest project!
+Excited to share AxiomX, my latest project!
 
 A high-performance cryptocurrency matching engine built from scratch:
 • 1,000+ orders/sec throughput
@@ -506,7 +506,7 @@ Best,
 
 ---
 
-## 💡 Remember
+## Remember
 
 1. **Quality > Quantity**: One well-documented project beats five half-finished ones
 2. **Make it Easy**: The easier it is to understand/run, the more likely recruiters will engage
@@ -516,4 +516,4 @@ Best,
 
 ---
 
-**Good luck with your job search! 🎉**
+**Good luck with your job search!**

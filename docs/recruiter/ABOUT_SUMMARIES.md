@@ -26,15 +26,15 @@ A complete observability stack (Prometheus, Grafana, and Loki) provides deep ins
 
 ## LinkedIn/Professional Post
 ```
-🚀 Excited to share AxiomX - a high-performance cryptocurrency matching engine delivering institutional-grade trading infrastructure!
+Excited to share AxiomX - a high-performance cryptocurrency matching engine delivering institutional-grade trading infrastructure!
 
-✨ Key Achievements:
+Key Achievements:
 • 1,000+ orders/second throughput
 • Sub-5ms p95 latency
 • Zero failures under 250K+ request load test
 • Full ACID compliance with horizontal scalability
 
-🔧 Tech Stack:
+Tech Stack:
 Built with Go, Apache Kafka, Redis, PostgreSQL, and deployed on Kubernetes with complete observability via Prometheus/Grafana/Loki.
 
 Perfect for teams building high-frequency trading platforms or crypto exchanges requiring millisecond-level responsiveness.
@@ -44,12 +44,12 @@ Perfect for teams building high-frequency trading platforms or crypto exchanges 
 
 ## Twitter/X Post (280 chars)
 ```
-Built AxiomX - a production-ready crypto matching engine 🚀
+Built AxiomX - a production-ready crypto matching engine
 
-⚡ 1K+ orders/sec
-⏱️ Sub-5ms p95 latency
-📊 Full observability
-☁️ Kubernetes-native
+1K+ orders/sec
+Sub-5ms p95 latency
+Full observability
+Kubernetes-native
 
 Go + Kafka + Redis + K8s
 

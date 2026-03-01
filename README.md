@@ -60,8 +60,6 @@ Production-ready order matching engine for cryptocurrency trading, designed to h
 
 ## Quick Start
 
-## Quick Start
-
 ### Local Development with Docker Compose
 
 Run the complete stack locally with all dependencies:
@@ -555,7 +553,8 @@ AxiomX/
 ├── docs/                        # Documentation
 │   ├── logo.svg                # Project logo
 │   ├── API_README.md           # API documentation
-│   └── guides/                 # Development guides
+│   ├── guides/                 # Development guides
+│   └── recruiter/              # Recruiter-focused docs
 │
 ├── docker-compose.yml           # Local development stack
 ├── Dockerfile                   # API server container image
@@ -568,11 +567,6 @@ AxiomX/
 ├── README.md                    # This file
 ├── RECRUITER_GUIDE.md          # Technical guide for recruiters
 ├── DEPLOYMENT_GUIDE.md         # Deployment instructions
-├── PUBLISHING_GUIDE.md         # Publishing and sharing guide
-├── QUICK_START_PACKAGING.md    # Quick packaging guide
-├── CHECKLIST.md                # Pre-launch checklist
-├── START_HERE.md               # Quick start guide
-├── ABOUT_SUMMARIES.md          # Project summaries
 └── LICENSE                      # MIT License
 ```
 
@@ -581,7 +575,7 @@ AxiomX/
 ### For Developers
 
 **Getting Started**
-- **[START_HERE.md](START_HERE.md)** - Quickest way to get up and running
+- **[docs/recruiter/START_HERE.md](docs/recruiter/START_HERE.md)** - Quickest way to get up and running
 - **[docker-compose.yml](docker-compose.yml)** - Complete local development environment
 
 **Development Guides**
@@ -613,27 +607,27 @@ AxiomX/
 ### For Sharing & Publishing
 
 **Package Distribution**
-- **[QUICK_START_PACKAGING.md](QUICK_START_PACKAGING.md)** - Step-by-step guide to:
+- **[docs/recruiter/QUICK_START_PACKAGING.md](docs/recruiter/QUICK_START_PACKAGING.md)** - Step-by-step guide to:
   - Publish Docker images to GitHub Container Registry
   - Create GitHub releases
   - Configure repository for maximum visibility
 
 **Portfolio Integration**
-- **[PUBLISHING_GUIDE.md](PUBLISHING_GUIDE.md)** - Complete guide for:
+- **[docs/recruiter/PUBLISHING_GUIDE.md](docs/recruiter/PUBLISHING_GUIDE.md)** - Complete guide for:
   - Adding to resume and LinkedIn
   - Creating demo videos
   - Repository optimization
   - Tracking engagement
 
 **Pre-Launch Checklist**
-- **[CHECKLIST.md](CHECKLIST.md)** - Comprehensive checklist ensuring:
+- **[docs/recruiter/CHECKLIST.md](docs/recruiter/CHECKLIST.md)** - Comprehensive checklist ensuring:
   - Code quality standards met
   - Documentation complete
   - Repository properly configured
   - Ready for recruiter review
 
 **Project Summaries**
-- **[ABOUT_SUMMARIES.md](ABOUT_SUMMARIES.md)** - Pre-written summaries for:
+- **[docs/recruiter/ABOUT_SUMMARIES.md](docs/recruiter/ABOUT_SUMMARIES.md)** - Pre-written summaries for:
   - GitHub About section
   - LinkedIn posts
   - Twitter/X posts
@@ -774,7 +768,7 @@ This means you are free to use, modify, and distribute this code for any purpose
 - Skills assessment framework
 - Common interview questions answered
 
-**For Developers**: Start with [START_HERE.md](START_HERE.md) or run:
+**For Developers**: Start with [docs/recruiter/START_HERE.md](docs/recruiter/START_HERE.md) or run:
 ```bash
 docker-compose up -d && curl http://localhost:8081/health
 ```

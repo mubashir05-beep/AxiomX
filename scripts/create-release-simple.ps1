@@ -116,7 +116,7 @@ Observability: Prometheus, Grafana, Loki | Infrastructure: Kubernetes, Docker, T
 MIT License - see [LICENSE](LICENSE)
 "@
 
-$releaseNotesFile = "RELEASE_NOTES_v$Version.md"
+$releaseNotesFile = "docs/recruiter/RELEASE_NOTES_v$Version.md"
 $releaseNotes | Out-File -FilePath $releaseNotesFile -Encoding UTF8
 Write-Host "  Saved to: $releaseNotesFile" -ForegroundColor Green
 

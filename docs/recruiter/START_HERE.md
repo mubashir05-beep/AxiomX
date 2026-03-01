@@ -1,4 +1,4 @@
-# 🎯 TL;DR - Make AxiomX Recruiter-Ready
+# TL;DR - Make AxiomX Recruiter-Ready
 
 **Quick summary of what to do and why.**
 
@@ -12,7 +12,7 @@ Plus, you have complete guides for **Package & Distribute** (Option 2):
 
 | File | Purpose |
 |------|---------|
-| **README.md** ✨ | Clean, professional, recruiter-focused |
+| **README.md** | Clean, professional, recruiter-focused |
 | **RECRUITER_GUIDE.md** | Technical deep-dive for recruiters |
 | **QUICK_START_PACKAGING.md** | Step-by-step Package & Distribute guide |
 | **PUBLISHING_GUIDE.md** | Comprehensive publishing strategy |
@@ -23,7 +23,7 @@ Plus, you have complete guides for **Package & Distribute** (Option 2):
 
 ---
 
-## 🚀 What To Do Right Now (20 Minutes)
+## What To Do Right Now (20 Minutes)
 
 ### Step 1: Publish Docker Image (10 min)
 
@@ -53,34 +53,34 @@ Plus, you have complete guides for **Package & Distribute** (Option 2):
 ### Step 3: Update Repository Settings (2 min)
 
 1. Go to your GitHub repo
-2. Click ⚙️ next to "About"
+2. Click the gear icon next to "About"
 3. Add description from `ABOUT_SUMMARIES.md`
 4. Add topics: `cryptocurrency`, `trading-engine`, `golang`, `kafka`, `kubernetes`, etc.
 5. Pin to your profile
 
-**Done!** ✅
+**Done!**
 
 ---
 
-## 📊 Why This Approach?
+## Why This Approach?
 
 | Approach | Cost | Recruiter Visibility | Your Effort |
 |----------|------|---------------------|-------------|
-| **Package & Distribute** (What we did) | **$0** | ⭐⭐⭐⭐⭐ | 20 min |
-| Deploy to Railway/Render | $5-25/mo | ⭐⭐⭐⭐ | 30 min |
-| Deploy to AWS EKS | ~$550/mo | ⭐⭐⭐ | 4 hours |
-| Just GitHub repo | $0 | ⭐⭐ | 0 min |
+| **Package & Distribute** (What we did) | **$0** | (5 stars) | 20 min |
+| Deploy to Railway/Render | $5-25/mo | (4 stars) | 30 min |
+| Deploy to AWS EKS | ~$550/mo | (3 stars) | 4 hours |
+| Just GitHub repo | $0 | (2 stars) | 0 min |
 
 **Package & Distribute wins** because:
-- ✅ Free forever
-- ✅ Professional presentation
-- ✅ Easy for recruiters to test (`docker pull` → `docker-compose up`)
-- ✅ Shows DevOps skills (packaging, tagging, releases)
-- ✅ Discoverable (GitHub packages search)
+- Free forever
+- Professional presentation
+- Easy for recruiters to test (`docker pull` → `docker-compose up`)
+- Shows DevOps skills (packaging, tagging, releases)
+- Discoverable (GitHub packages search)
 
 ---
 
-## 🎯 What Recruiters Will See
+## What Recruiters Will See
 
 ### 1. Clean README
 - Clear "what it does" in 30 seconds
@@ -110,7 +110,7 @@ docker-compose up -d
 
 ---
 
-## 📝 How To Use In Applications
+## How To Use In Applications
 
 ### In Cover Letters
 ```
@@ -150,31 +150,31 @@ Would love to discuss how my experience applies to [Company]'s challenges.
 
 ---
 
-## ✅ Success Metrics
+## Success Metrics
 
 After 2 weeks, you should see:
 
 **GitHub Insights** (Repository → Insights → Traffic):
-- 🎯 50-100+ repository views
-- 🎯 5-10+ stars
-- 🎯 3-5+ clones
-- 🎯 1-2+ pull requests (if you're lucky!)
+- 50-100+ repository views
+- 5-10+ stars
+- 3-5+ clones
+- 1-2+ pull requests (if you're lucky!)
 
 **Docker Registry**:
-- 🎯 10-20+ image pulls
+- 10-20+ image pulls
 
 **LinkedIn** (if you post):
-- 🎯 500-1000+ post views
-- 🎯 10-20+ reactions
+- 500-1000+ post views
+- 10-20+ reactions
 
 **Job Applications**:
-- 🎯 Higher response rate when you mention it
-- 🎯 Technical interviews go deeper (they read the code!)
-- 🎯 More "tell me about this project" questions
+- Higher response rate when you mention it
+- Technical interviews go deeper (they read the code!)
+- More "tell me about this project" questions
 
 ---
 
-## 🔄 Next Actions (Priority Order)
+## Next Actions (Priority Order)
 
 ### Must Do (Today)
 1. [ ] Run `.\scripts\publish-docker.ps1`
@@ -199,7 +199,7 @@ After 2 weeks, you should see:
 
 ---
 
-## 🆘 If You Get Stuck
+## If You Get Stuck
 
 ### Docker Publishing Issues
 Check: [QUICK_START_PACKAGING.md](QUICK_START_PACKAGING.md) → "Troubleshooting" section
@@ -212,7 +212,7 @@ Check: [CHECKLIST.md](CHECKLIST.md) for comprehensive verification steps
 
 ---
 
-## 💡 Pro Tips
+## Pro Tips
 
 1. **Update Your GitHub Username**: Search for "yourusername" in all files and replace with your actual username
 
@@ -233,23 +233,23 @@ Check: [CHECKLIST.md](CHECKLIST.md) for comprehensive verification steps
 
 ---
 
-## 🎉 You're Ready!
+## You're Ready!
 
 Your project is now:
-- ✅ Professionally packaged
-- ✅ Easy to discover
-- ✅ Simple to test
-- ✅ Well documented
-- ✅ Zero cost to maintain
-- ✅ Designed for recruiter success
+- Professionally packaged
+- Easy to discover
+- Simple to test
+- Well documented
+- Zero cost to maintain
+- Designed for recruiter success
 
 **Total time investment**: ~60 minutes  
 **Total ongoing cost**: $0  
-**Recruiter impact**: High ⭐⭐⭐⭐⭐
+**Recruiter impact**: High (5 stars)
 
 ---
 
-## 🚀 Go Ship It!
+## Go Ship It!
 
 ```powershell
 # Start now:
@@ -260,6 +260,6 @@ Your project is now:
 
 **Questions?** All guides are in the repo. Check the file list at the top of this doc.
 
-**Ready to apply?** Use the templates in [RECRUITER_GUIDE.md](RECRUITER_GUIDE.md) and [CHECKLIST.md](CHECKLIST.md).
+**Ready to apply?** Use the templates in [RECRUITER_GUIDE.md](../../RECRUITER_GUIDE.md) and [CHECKLIST.md](CHECKLIST.md).
 
-**Good luck with your job search! 🎯**
+**Good luck with your job search!**

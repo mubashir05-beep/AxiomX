@@ -1,4 +1,4 @@
-# 📦 Quick Start: Package & Distribute
+# Quick Start: Package & Distribute
 
 **Goal**: Make AxiomX easy for recruiters to download and run - zero costs!
 
@@ -6,17 +6,17 @@ This guide covers **Option 2** from the DEPLOYMENT_GUIDE: Publishing Docker imag
 
 ---
 
-## 🎯 What You'll Achieve
+## What You'll Achieve
 
-✅ Docker images published to GitHub Container Registry (free, unlimited public images)  
-✅ GitHub Release with downloadable package  
-✅ Professional presentation for recruiters  
-✅ Easy one-command setup for anyone  
-✅ **Total cost: $0**
+Docker images published to GitHub Container Registry (free, unlimited public images)  
+GitHub Release with downloadable package  
+Professional presentation for recruiters  
+Easy one-command setup for anyone  
+**Total cost: $0**
 
 ---
 
-## ⏱️ Time Required
+## Time Required
 
 - **Total**: ~20 minutes  
 - **Docker publish**: ~10 minutes  
@@ -24,7 +24,7 @@ This guide covers **Option 2** from the DEPLOYMENT_GUIDE: Publishing Docker imag
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you start, make sure you have:
 
@@ -36,7 +36,7 @@ Before you start, make sure you have:
 
 ---
 
-## 🚀 Step 1: Create GitHub Personal Access Token (5 min)
+## Step 1: Create GitHub Personal Access Token (5 min)
 
 You need this to publish Docker images.
 
@@ -51,18 +51,18 @@ You need this to publish Docker images.
    - Note: `AxiomX Docker Publishing`
    - Expiration: `90 days` (or your preference)
    - Scopes: Check these boxes:
-     - ✅ `write:packages`
-     - ✅ `read:packages`
-     - ✅ `delete:packages`
+     - `write:packages`
+     - `read:packages`
+     - `delete:packages`
 
 4. **Click**: "Generate token"
 
 5. **Copy token** (you'll need it in next step)
-   ⚠️ Save it somewhere safe - you won't see it again!
+   Warning: Save it somewhere safe - you won't see it again!
 
 ---
 
-## 🐳 Step 2: Publish Docker Images (10 min)
+## Step 2: Publish Docker Images (10 min)
 
 ### Option A: Using the Script (Recommended)
 
@@ -120,7 +120,7 @@ docker pull ghcr.io/yourusername/axiomx-api:latest
 
 ---
 
-## 📦 Step 3: Create GitHub Release (10 min)
+## Step 3: Create GitHub Release (10 min)
 
 ### Option A: Using the Script (Easiest)
 
@@ -154,15 +154,15 @@ docker pull ghcr.io/yourusername/axiomx-api:latest
 3. **Fill in the form**:
    - **Choose a tag**: `v1.0.0`
    - **Release title**: `AxiomX v1.0.0 - Production Ready`
-   - **Description**: Copy from `RELEASE_NOTES_v1.0.0.md` (created by script)
+   - **Description**: Copy from `docs/recruiter/RELEASE_NOTES_v1.0.0.md` (created by script)
      
      Or use this template:
      ```markdown
-     # 🎉 AxiomX v1.0.0 - Production Ready
+     # AxiomX v1.0.0 - Production Ready
      
      High-performance cryptocurrency matching engine handling **1,000+ orders/second** with **sub-5ms P95 latency**.
      
-     ## ⚡ Quick Start
+     ## Quick Start
      
      ```bash
      docker-compose up -d
@@ -170,13 +170,13 @@ docker pull ghcr.io/yourusername/axiomx-api:latest
      
      Then visit http://localhost:8081/health
      
-     ## 📊 Performance
+     ## Performance
      
      - **Throughput**: 1,056 req/s
      - **P95 Latency**: 4.15ms
      - **Error Rate**: 0.00%
      
-     See [RECRUITER_GUIDE.md](RECRUITER_GUIDE.md) for details.
+   See [RECRUITER_GUIDE.md](../../RECRUITER_GUIDE.md) for details.
      ```
 
 4. **Attach files**:
@@ -195,14 +195,14 @@ https://github.com/yourusername/AxiomX/releases/tag/v1.0.0
 
 ---
 
-## ✅ Step 4: Update README (2 min)
+## Step 4: Update README (2 min)
 
 Update your README to reference the published image:
 
 Add this near the Quick Start section:
 
 ```markdown
-## 🐳 Pre-built Docker Image
+## Pre-built Docker Image
 
 No build required! Pull the pre-built image:
 
@@ -215,7 +215,7 @@ Or use our docker-compose file which is configured to use the published image.
 
 ---
 
-## 🎯 Step 5: Configure GitHub Repository (5 min)
+## Step 5: Configure GitHub Repository (5 min)
 
 Make your repo shine for recruiters!
 
@@ -223,7 +223,7 @@ Make your repo shine for recruiters!
 
 1. **Go to repository**: `https://github.com/yourusername/AxiomX`
 
-2. **Click** the ⚙️ icon next to "About"
+2. **Click** the gear icon next to "About"
 
 3. **Fill in**:
    - **Description**: 
@@ -241,7 +241,7 @@ Make your repo shine for recruiters!
      fintech, low-latency, distributed-systems, portfolio-project
      ```
    
-   - **Include in home page**: Check ✅ Releases and ✅ Packages
+   - **Include in home page**: Check Releases and Packages
 
 4. **Click**: "Save changes"
 
@@ -255,7 +255,7 @@ Make your repo shine for recruiters!
 
 ---
 
-## 🎉 You're Done!
+## You're Done!
 
 Your project is now beautifully packaged and ready for recruiters!
 
@@ -282,7 +282,7 @@ Full details in the RECRUITER_GUIDE.md.
 
 ---
 
-## 📈 Track Success
+## Track Success
 
 ### GitHub Insights (check weekly)
 
@@ -305,7 +305,7 @@ See:
 
 ---
 
-## 🚀 Next Steps (Optional)
+## Next Steps (Optional)
 
 ### Week 1
 - [ ] Add project to LinkedIn Featured section
@@ -324,7 +324,7 @@ See:
 
 ---
 
-## 🆘 Troubleshooting
+## Troubleshooting
 
 **Docker login failed**:
 - Use GitHub username (not email)
@@ -348,7 +348,7 @@ See:
 
 ---
 
-## 💡 Pro Tips
+## Pro Tips
 
 1. **Update regularly**: Create new releases (v1.1.0, v1.2.0) as you add features
 2. **Keep it simple**: Recruiters want "clone and run" simplicity
@@ -358,10 +358,10 @@ See:
 
 ---
 
-**🎯 Your project is now recruiter-ready!**
+**Your project is now recruiter-ready!**
 
-Cost: **$0/month** • Setup time: **20 minutes** • Recruiter visibility: **⭐⭐⭐⭐⭐**
+Cost: **$0/month** • Setup time: **20 minutes** • Recruiter visibility: **High (5 stars)**
 
 ---
 
-**Questions?** Check [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for more options or [RECRUITER_GUIDE.md](RECRUITER_GUIDE.md) for how recruiters see this project.
+**Questions?** Check [DEPLOYMENT_GUIDE.md](../../DEPLOYMENT_GUIDE.md) for more options or [RECRUITER_GUIDE.md](../../RECRUITER_GUIDE.md) for how recruiters see this project.

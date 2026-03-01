@@ -139,7 +139,7 @@ See [RECRUITER_GUIDE.md](RECRUITER_GUIDE.md) for:
 - [README](README.md) - Project overview
 - [RECRUITER_GUIDE](RECRUITER_GUIDE.md) - Technical highlights & Q&A
 - [DEPLOYMENT_GUIDE](DEPLOYMENT_GUIDE.md) - Deployment options
-- [PUBLISHING_GUIDE](PUBLISHING_GUIDE.md) - How to share
+- [PUBLISHING_GUIDE](docs/recruiter/PUBLISHING_GUIDE.md) - How to share
 
 ## 📦 Files Attached
 
@@ -156,7 +156,7 @@ MIT License - see [LICENSE](LICENSE)
 ⭐ **Star this repo if you find it useful!**
 "@
 
-$releaseNotesFile = "RELEASE_NOTES_v$Version.md"
+$releaseNotesFile = "docs/recruiter/RELEASE_NOTES_v$Version.md"
 $releaseNotes | Out-File -FilePath $releaseNotesFile -Encoding UTF8
 Write-Host " ✅" -ForegroundColor Green
 Write-Host "   Saved to: $releaseNotesFile" -ForegroundColor Gray
