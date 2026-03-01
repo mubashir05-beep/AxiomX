@@ -50,7 +50,7 @@ environment:
 
 # Secrets (update with actual values from Terraform outputs)
 secrets:
-  DATABASE_URL: "postgres://axiomx:password@rds-endpoint:5432/trading?sslmode=require"
+  DATABASE_URL: "postgres://axiomx:password@rds-endpoint:5432/axiomx?sslmode=require"
   KAFKA_BROKERS: "kafka:9092"
   REDIS_ADDR: "redis:6379"
   REDIS_PASSWORD: "redis-password"
@@ -87,10 +87,6 @@ monitoring:
   cloudwatch:
     enabled: false
     log_group: "/axiomx/trading-engine"
-
-# Pod Disruption Budget
-podDisruptionBudget:
-  minAvailable: 2
 
 # Security configuration
 security:
