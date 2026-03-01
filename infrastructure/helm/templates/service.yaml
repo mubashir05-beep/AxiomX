@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trading-engine.fullname" . }}
+  labels:
+    {{- include "trading-engine.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.service.port | default 8080 }}
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "trading-engine.selectorLabels" . | nindent 4 }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "trading-engine.fullname" . }}-headless
+  labels:
+    {{- include "trading-engine.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.port | default 8080 }}
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "trading-engine.selectorLabels" . | nindent 4 }}

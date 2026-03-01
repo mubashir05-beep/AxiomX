@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "trading-engine.fullname" . }}
+  labels:
+    {{- include "trading-engine.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.podDisruptionBudget.minAvailable | default 2 }}
+  selector:
+    matchLabels:
+      {{- include "trading-engine.selectorLabels" . | nindent 6 }}

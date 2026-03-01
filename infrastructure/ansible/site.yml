@@ -1,0 +1,221 @@
+---
+# Main Ansible playbook for AxiomX trading engine infrastructure
+
+- name: Setup AxiomX Trading Engine Infrastructure
+  hosts: all
+  become: true
+  
+  tasks:
+  - name: Update system packages
+    apt:
+      update_cache: yes
+      upgrade: dist
+      autoclean: yes
+      autoremove: yes
+    when: ansible_os_family == "Debian"
+  
+  - name: Install dependencies
+    apt:
+      name:
+        - curl
+        - wget
+        - git
+        - vim
+        - htop
+        - net-tools
+        - jq
+        - unzip
+        - awscli
+        - python3-pip
+      state: present
+    when: ansible_os_family == "Debian"
+  
+  - name: Install Docker
+    apt:
+      name: docker.io
+      state: present
+    when: ansible_os_family == "Debian"
+  
+  - name: Add current user to docker group
+    user:
+      name: "{{ ansible_user }}"
+      groups: docker
+      append: yes
+  
+  - name: Start Docker service
+    systemd:
+      name: docker
+      state: started
+      enabled: yes
+  
+  - name: Install Docker Compose
+    shell: |
+      curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
+    args:
+      creates: /usr/local/bin/docker-compose
+  
+  - name: Install kubectl
+    shell: |
+      curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
+      chmod +x kubectl
+      mv kubectl /usr/local/bin/
+    args:
+      creates: /usr/local/bin/kubectl
+  
+  - name: Install Helm
+    shell: |
+      curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    args:
+      creates: /usr/local/bin/helm
+  
+  - name: Install Terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_linux_amd64.zip
+      dest: /usr/local/bin/
+      remote_src: yes
+    args:
+      creates: /usr/local/bin/terraform
+  
+  - name: Create logging directory
+    file:
+      path: /var/log/axiomx
+      state: directory
+      mode: '0755'
+  
+  - name: Install Promtail (Loki agent)
+    shell: |
+      curl -s https://api.github.com/repos/grafana/loki/releases/latest | grep browser_download_url | grep promtail-linux-amd64 | cut -d '"' -f 4 | wget -i -
+      unzip promtail-linux-amd64.zip
+      chmod +x promtail-linux-amd64
+      mv promtail-linux-amd64 /usr/local/bin/promtail
+    args:
+      creates: /usr/local/bin/promtail
+  
+  - name: Create Promtail configuration
+    copy:
+      content: |
+        server:
+          http_listen_port: 9080
+          grpc_listen_port: 0
+        
+        positions:
+          filename: /tmp/positions.yaml
+        
+        clients:
+          - url: http://loki:3100/loki/api/v1/push
+        
+        scrape_configs:
+          - job_name: system
+            static_configs:
+              - targets:
+                  - localhost
+                labels:
+                  job: varlogs
+                  __path__: /var/log/**/*
+          
+          - job_name: docker
+            static_configs:
+              - targets:
+                  - localhost
+                labels:
+                  job: docker
+                  __path__: /var/lib/docker/containers/*/*-json.log
+      dest: /etc/promtail/config.yaml
+      mode: '0644'
+    notify: Restart Promtail
+  
+  - name: Create systemd service for Promtail
+    copy:
+      content: |
+        [Unit]
+        Description=Promtail service
+        After=network.target
+        
+        [Service]
+        Type=simple
+        ExecStart=/usr/local/bin/promtail -config.file=/etc/promtail/config.yaml
+        Restart=on-failure
+        
+        [Install]
+        WantedBy=multi-user.target
+      dest: /etc/systemd/system/promtail.service
+      mode: '0644'
+    notify: Reload systemd
+  
+  - name: Add CloudWatch Logs agent
+    apt:
+      name: amazon-cloudwatch-agent
+      state: present
+  
+  - name: Create CloudWatch agent configuration
+    copy:
+      content: |
+        {
+          "logs": {
+            "logs_collected": {
+              "files": {
+                "collect_list": [
+                  {
+                    "file_path": "/var/log/axiomx/*.log",
+                    "log_group_name": "/axiomx/trading-engine",
+                    "log_stream_name": "{instance_id}"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      dest: /opt/aws/amazon-cloudwatch-agent/etc/config.json
+      mode: '0644'
+    notify: Restart CloudWatch agent
+  
+  - name: Install Node Exporter for Prometheus
+    shell: |
+      wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
+      tar -xzf node_exporter-1.6.1.linux-amd64.tar.gz
+      mv node_exporter-1.6.1.linux-amd64/node_exporter /usr/local/bin/
+      rm -rf node_exporter-1.6.1.linux-amd64*
+    args:
+      creates: /usr/local/bin/node_exporter
+  
+  - name: Create systemd service for Node Exporter
+    copy:
+      content: |
+        [Unit]
+        Description=Node Exporter
+        After=network.target
+        
+        [Service]
+        Type=simple
+        ExecStart=/usr/local/bin/node_exporter
+        Restart=on-failure
+        
+        [Install]
+        WantedBy=multi-user.target
+      dest: /etc/systemd/system/node_exporter.service
+      mode: '0644'
+    notify: Restart Node Exporter
+  
+  handlers:
+  - name: Restart Promtail
+    systemd:
+      name: promtail
+      state: restarted
+      enabled: yes
+  
+  - name: Restart CloudWatch agent
+    systemd:
+      name: amazon-cloudwatch-agent
+      state: restarted
+      enabled: yes
+  
+  - name: Restart Node Exporter
+    systemd:
+      name: node_exporter
+      state: restarted
+      enabled: yes
+  
+  - name: Reload systemd
+    systemd:
+      daemon_reload: yes

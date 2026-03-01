@@ -1,0 +1,18 @@
+{{- if .Values.monitoring.servicemonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "trading-engine.fullname" . }}
+  labels:
+    {{- include "trading-engine.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "trading-engine.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      path: {{ .Values.monitoring.servicemonitor.scrape_path | default "/metrics" }}
+      interval: {{ .Values.monitoring.servicemonitor.interval | default "30s" }}
+      scrapeTimeout: 10s
+      scheme: http
+{{- end }}
