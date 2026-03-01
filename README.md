@@ -47,10 +47,10 @@ Production-ready order matching engine for cryptocurrency trading, designed to h
 - Horizontal scalability with stateless API tier
 
 **Production Infrastructure**
-- Complete Kubernetes deployment manifests and Helm charts
-- Infrastructure as Code using Terraform for AWS (VPC, EKS, RDS, MSK, ElastiCache)
-- Automated provisioning with Ansible playbooks
-- Multi-availability zone deployment for high availability
+- Complete Kubernetes deployment with Helm charts for reproducible releases
+- Infrastructure as Code using Terraform (AWS: VPC, EKS, RDS, MSK, ElastiCache, IAM)
+- Ansible playbooks for automated deployment and cluster configuration
+- Multi-availability zone deployment for high availability and disaster recovery
 
 **Observability**
 - Comprehensive metrics collection with Prometheus
@@ -267,24 +267,33 @@ Full machine-readable results: [scripts/k6-heavy-summary.json](scripts/k6-heavy-
   - Persistent Volume Claims for stateful services
 
 - **Helm** - Kubernetes package manager
-  - Templated Kubernetes manifests
-  - Value files for environment-specific configuration
-  - Release management and rollback capabilities
+  - Templated Kubernetes manifests with robust error handling
+  - Value files for environment-specific configuration (dev/staging/prod)
+  - Release management, upgrades, and rollback capabilities
+  - Dependency management between chart releases
+  - Pre/post-install and pre/post-upgrade hooks for validation
+  - Chart versioning and semantic release tracking
 
 **Infrastructure as Code**
-- **Terraform** - Cloud infrastructure provisioning
-  - AWS VPC with public and private subnets across multiple AZs
-  - EKS (Elastic Kubernetes Service) cluster
-  - RDS PostgreSQL with Multi-AZ deployment
-  - MSK (Managed Streaming for Apache Kafka) cluster
-  - ElastiCache Redis cluster
-  - Security groups and IAM roles
-  - Modular design with reusable modules
+- **Terraform** - Cloud infrastructure provisioning for AWS
+  - Complete VPC setup with public/private subnets across multiple AZs
+  - EKS (Elastic Kubernetes Service) cluster with node groups
+  - RDS PostgreSQL with Multi-AZ deployment and automated backups
+  - MSK (Managed Streaming for Apache Kafka) cluster with replication
+  - ElastiCache Redis cluster with cluster mode enabled
+  - Security groups, IAM roles, policies, and RBAC configuration
+  - Modular design with reusable modules for teams
+  - State management and remote backend support
+  - tfvars for environment-specific values (dev, staging, prod)
 
-- **Ansible** - Configuration management and provisioning
-  - Kubernetes cluster configuration
-  - Application deployment automation
-  - Environment setup and validation
+- **Ansible** - Configuration management and deployment automation
+  - Playbooks for entire infrastructure setup from scratch
+  - Role-based organization for Kubernetes, networking, and services
+  - Idempotent operations ensuring consistent state
+  - Dynamic inventory management and host grouping
+  - Templating for configuration management across environments
+  - Secure credential handling with Ansible Vault
+  - Pre/post-deployment validation and health checks
 
 **Cloud Platform**
 - **AWS** - Primary cloud provider
