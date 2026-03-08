@@ -1,0 +1,190 @@
+# Local dependencies for development
+# PostgreSQL, Redis, and Kafka running in Kubernetes
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trading
+---
+# PostgreSQL for local dev
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: trading
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: trading
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          env:
+            - name: POSTGRES_DB
+              value: "trading"
+            - name: POSTGRES_USER
+              value: "axiomx"
+            - name: POSTGRES_PASSWORD
+              value: "localdev123"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-sql
+          configMap:
+            name: postgres-init
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: trading
+data:
+  init.sql: |
+    CREATE TABLE IF NOT EXISTS trades (
+        id SERIAL PRIMARY KEY,
+        order_id VARCHAR(36) NOT NULL,
+        symbol VARCHAR(20) NOT NULL,
+        side VARCHAR(4) NOT NULL,
+        price DECIMAL(20, 8) NOT NULL,
+        quantity DECIMAL(20, 8) NOT NULL,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        buyer_order_id VARCHAR(36),
+        seller_order_id VARCHAR(36)
+    );
+    CREATE INDEX idx_trades_symbol ON trades(symbol);
+    CREATE INDEX idx_trades_timestamp ON trades(timestamp);
+---
+# Redis for caching
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: trading
+spec:
+  ports:
+    - port: 6379
+  selector:
+    app: redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: trading
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          ports:
+            - containerPort: 6379
+          command: ["redis-server", "--appendonly", "yes"]
+---
+# Kafka for events (single broker for local dev)
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  namespace: trading
+spec:
+  ports:
+    - port: 9092
+  selector:
+    app: kafka
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  namespace: trading
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka:7.5.0
+          ports:
+            - containerPort: 9092
+          env:
+            - name: KAFKA_BROKER_ID
+              value: "1"
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: "zookeeper:2181"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://kafka:9092"
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  namespace: trading
+spec:
+  ports:
+    - port: 2181
+  selector:
+    app: zookeeper
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  namespace: trading
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: confluentinc/cp-zookeeper:7.5.0
+          ports:
+            - containerPort: 2181
+          env:
+            - name: ZOOKEEPER_CLIENT_PORT
+              value: "2181"
+            - name: ZOOKEEPER_TICK_TIME
+              value: "2000"

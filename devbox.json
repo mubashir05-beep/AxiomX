@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/main/.schema/devbox.schema.json",
+  "packages": [
+    "go-task",
+    "go@1.23.5",
+    "terraform@1.7.4",
+    "kubectl@1.28.0",
+    "kubernetes-helm@3.14.0",
+    "awscli2@2.15.0",
+    "postgresql@15.3",
+    "redis@7.2.4",
+    "k9s@0.32.4",
+    "kind@0.22.0",
+    "docker-compose@2.24.0"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo '🚀 AxiomX Development Environment Activated!'",
+      "echo ''",
+      "echo 'Available commands:'",
+      "echo '  go version        → Check Go version'",
+      "echo '  terraform version → Check Terraform version'",
+      "echo '  kubectl version   → Check kubectl version'",
+      "echo '  helm version      → Check Helm version'",
+      "echo '  task --list       → Show all available tasks'",
+      "echo ''",
+      "echo 'Quick start:'",
+      "echo '  task local-start  → Start local Kubernetes cluster'",
+      "echo '  task dev          → Run development server'",
+      "echo '  task test         → Run all tests'",
+      "echo ''"
+    ],
+    "scripts": {
+      "setup": [
+        "go mod download",
+        "echo 'Dependencies downloaded!'"
+      ]
+    }
+  },
+  "env": {
+    "GOPATH": "$PWD/.devbox/go",
+    "GO111MODULE": "on",
+    "CGO_ENABLED": "0",
+    "ENVIRONMENT": "development"
+  }
+}

@@ -1,0 +1,280 @@
+# Task Runner for AxiomX Trading Engine
+# Install: https://taskfile.dev/installation/
+# Usage: task <command>
+
+version: '3'
+
+vars:
+  APP_NAME: axiomx-trading-engine
+  DOCKER_REGISTRY: docker.io/yourusername
+  KUBE_NAMESPACE: trading
+  AWS_REGION: us-east-1
+  CLUSTER_NAME: axiomx-dev
+
+tasks:
+  # ===== DEVELOPMENT =====
+  
+  dev:
+    desc: "Start development server with hot reload"
+    cmds:
+      - echo "🔥 Starting development server..."
+      - docker-compose up -d postgres redis kafka
+      - sleep 5
+      - go run cmd/api/main.go
+  
+  dev-engine:
+    desc: "Start matching engine in dev mode"
+    cmds:
+      - echo "⚙️ Starting matching engine..."
+      - docker-compose up -d postgres redis kafka
+      - sleep 5
+      - go run cmd/engine/main.go
+  
+  build:
+    desc: "Build Go binaries"
+    cmds:
+      - echo "🔨 Building API server..."
+      - go build -o bin/api cmd/api/main.go
+      - echo "🔨 Building matching engine..."
+      - go build -o bin/engine cmd/engine/main.go
+      - echo "✅ Build complete!"
+  
+  test:
+    desc: "Run all tests"
+    cmds:
+      - echo "🧪 Running tests..."
+      - go test -v -race -coverprofile=coverage.out ./...
+      - go tool cover -html=coverage.out -o coverage.html
+      - 'echo "✅ Tests complete! Coverage report: coverage.html"'
+  
+  lint:
+    desc: "Run linter"
+    cmds:
+      - echo "🔍 Running golangci-lint..."
+      - golangci-lint run ./...
+  
+  # ===== DOCKER =====
+  
+  docker-build:
+    desc: "Build Docker image"
+    cmds:
+      - echo "🐳 Building Docker image..."
+      - docker build -t {{.APP_NAME}}:latest .
+      - docker tag {{.APP_NAME}}:latest {{.DOCKER_REGISTRY}}/{{.APP_NAME}}:latest
+      - 'echo "✅ Image built: {{.APP_NAME}}:latest"'
+  
+  docker-push:
+    desc: "Push Docker image to registry"
+    deps: [docker-build]
+    cmds:
+      - echo "📤 Pushing to registry..."
+      - docker push {{.DOCKER_REGISTRY}}/{{.APP_NAME}}:latest
+      - echo "✅ Image pushed!"
+  
+  docker-run:
+    desc: "Run Docker container locally"
+    cmds:
+      - docker-compose up -d
+      - echo "✅ All services running!"
+      - 'echo "API: http://localhost:8081"'
+      - 'echo "Prometheus: http://localhost:9090"'
+      - 'echo "Grafana: http://localhost:3000"'
+  
+  docker-stop:
+    desc: "Stop all Docker containers"
+    cmds:
+      - docker-compose down
+      - echo "✅ All services stopped"
+  
+  docker-logs:
+    desc: "View Docker logs"
+    cmds:
+      - docker-compose logs -f
+  
+  # ===== LOCAL KUBERNETES =====
+  
+  local-start:
+    desc: "Start local Kubernetes cluster (Kind)"
+    cmds:
+      - echo "🚀 Creating local Kubernetes cluster..."
+      - kind create cluster --name axiomx-local --config infrastructure/local/kind-config.yaml
+      - echo "📦 Loading Docker image into cluster..."
+      - task: docker-build
+      - kind load docker-image {{.APP_NAME}}:latest --name axiomx-local
+      - echo "☸️ Deploying dependencies..."
+      - kubectl create namespace {{.KUBE_NAMESPACE}}
+      - kubectl apply -f infrastructure/local/dependencies.yaml
+      - echo "⏳ Waiting for dependencies..."
+      - sleep 20
+      - echo "🚀 Deploying trading engine..."
+      - kubectl apply -f infrastructure/local/trading-engine-local.yaml
+      - echo "✅ Local cluster ready!"
+      - task: local-status
+  
+  local-stop:
+    desc: "Delete local Kubernetes cluster"
+    cmds:
+      - echo "🗑️ Deleting local cluster..."
+      - kind delete cluster --name axiomx-local
+      - echo "✅ Cluster deleted"
+  
+  local-status:
+    desc: "Show local cluster status"
+    cmds:
+      - echo "📊 Cluster Status:"
+      - kubectl get nodes
+      - echo ""
+      - echo "📦 Pods in 'trading' namespace:"
+      - kubectl get pods -n {{.KUBE_NAMESPACE}}
+      - echo ""
+      - echo "🌐 Services:"
+      - kubectl get svc -n {{.KUBE_NAMESPACE}}
+  
+  local-logs:
+    desc: "View trading engine logs (local)"
+    cmds:
+      - kubectl logs -n {{.KUBE_NAMESPACE}} -l app=trading-engine --follow
+  
+  local-shell:
+    desc: "SSH into trading engine pod (local)"
+    cmds:
+      - kubectl exec -it -n {{.KUBE_NAMESPACE}} deployment/trading-engine -- /bin/sh
+  
+  local-port-forward:
+    desc: "Port forward to access locally"
+    cmds:
+      - echo "🌐 Forwarding port 8080..."
+      - 'echo "Access at: http://localhost:8080/health"'
+      - kubectl port-forward -n {{.KUBE_NAMESPACE}} svc/trading-engine 8080:8080
+  
+  # ===== HELM =====
+  
+  helm-install:
+    desc: "Install with Helm (local)"
+    cmds:
+      - echo "📦 Installing with Helm..."
+      - helm install axiomx-trading infrastructure/helm --namespace {{.KUBE_NAMESPACE}} --create-namespace --values infrastructure/helm/values-local.yaml
+      - echo "✅ Installed!"
+  
+  helm-upgrade:
+    desc: "Upgrade Helm release"
+    cmds:
+      - echo "⬆️ Upgrading..."
+      - helm upgrade axiomx-trading infrastructure/helm --namespace {{.KUBE_NAMESPACE}} --values infrastructure/helm/values-local.yaml
+      - echo "✅ Upgraded!"
+  
+  helm-rollback:
+    desc: "Rollback to previous version"
+    cmds:
+      - echo "⏪ Rolling back..."
+      - helm rollback axiomx-trading --namespace {{.KUBE_NAMESPACE}}
+      - echo "✅ Rolled back!"
+  
+  helm-list:
+    desc: "List Helm releases"
+    cmds:
+      - helm list --namespace {{.KUBE_NAMESPACE}}
+  
+  helm-history:
+    desc: "Show Helm release history"
+    cmds:
+      - helm history axiomx-trading --namespace {{.KUBE_NAMESPACE}}
+  
+  helm-uninstall:
+    desc: "Uninstall Helm release"
+    cmds:
+      - helm uninstall axiomx-trading --namespace {{.KUBE_NAMESPACE}}
+  
+  # ===== AWS INFRASTRUCTURE =====
+  
+  infra-init:
+    desc: "Initialize Terraform"
+    dir: infrastructure/terraform
+    cmds:
+      - echo "🏗️ Initializing Terraform..."
+      - terraform init
+      - echo "✅ Terraform initialized!"
+  
+  infra-plan:
+    desc: "Plan infrastructure changes"
+    dir: infrastructure/terraform
+    cmds:
+      - echo "📋 Planning infrastructure..."
+      - terraform plan -out=tfplan
+      - echo "✅ Plan saved to tfplan"
+  
+  infra-apply:
+    desc: "Apply infrastructure changes"
+    dir: infrastructure/terraform
+    cmds:
+      - echo "🚀 Applying infrastructure..."
+      - terraform apply tfplan
+      - terraform output > outputs.txt
+      - echo "✅ Infrastructure deployed!"
+      - echo "📄 Outputs saved to outputs.txt"
+  
+  infra-destroy:
+    desc: "Destroy infrastructure (DANGEROUS!)"
+    dir: infrastructure/terraform
+    cmds:
+      - 'echo "⚠️ WARNING: This will destroy ALL infrastructure!"'
+      - terraform destroy
+  
+  infra-connect:
+    desc: "Connect kubectl to AWS EKS"
+    cmds:
+      - echo "🔗 Connecting to EKS cluster..."
+      - aws eks update-kubeconfig --name {{.CLUSTER_NAME}} --region {{.AWS_REGION}}
+      - kubectl cluster-info
+      - echo "✅ Connected to EKS!"
+  
+  # ===== AWS DEPLOYMENT =====
+  
+  deploy-aws:
+    desc: "Deploy to AWS EKS"
+    cmds:
+      - echo "🚀 Deploying to AWS..."
+      - task: docker-build
+      - task: docker-push
+      - kubectl set image deployment/trading-engine trading-engine={{.DOCKER_REGISTRY}}/{{.APP_NAME}}:latest -n {{.KUBE_NAMESPACE}}
+      - kubectl rollout status deployment/trading-engine -n {{.KUBE_NAMESPACE}}
+      - echo "✅ Deployed to AWS!"
+  
+  aws-status:
+    desc: "Check AWS deployment status"
+    cmds:
+      - kubectl get pods -n {{.KUBE_NAMESPACE}}
+      - kubectl get svc -n {{.KUBE_NAMESPACE}}
+      - kubectl get hpa -n {{.KUBE_NAMESPACE}}
+  
+  aws-logs:
+    desc: "View AWS pod logs"
+    cmds:
+      - kubectl logs -n {{.KUBE_NAMESPACE}} -l app=trading-engine --follow
+  
+  # ===== UTILITIES =====
+  
+  clean:
+    desc: "Clean build artifacts"
+    cmds:
+      - rm -rf bin/
+      - rm -f coverage.out coverage.html
+      - echo "✅ Cleaned!"
+  
+  setup:
+    desc: "First-time project setup"
+    cmds:
+      - echo "🔧 Setting up AxiomX..."
+      - go mod download
+      - task: docker-build
+      - echo "✅ Setup complete!"
+      - echo ""
+      - echo "Next steps:"
+      - echo "  task dev          → Start development"
+      - echo "  task local-start  → Start local K8s"
+      - echo "  task test         → Run tests"
+  
+  help:
+    desc: "Show all available tasks"
+    cmds:
+      - task --list

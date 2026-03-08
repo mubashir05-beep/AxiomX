@@ -1,0 +1,61 @@
+# Helm values for LOCAL development (Kind cluster)
+# Use this with: helm install axiomx-trading . --values values-local.yaml
+
+replicaCount: 2
+
+image:
+  repository: axiomx-trading-engine
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: NodePort  # Changed from ClusterIP for easier local access
+  port: 8080
+  targetPort: 8080
+  nodePort: 30080  # Access via localhost:30080
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false  # Disable for local dev
+
+environment:
+  LOG_LEVEL: "debug"  # More verbose for debugging
+  ENVIRONMENT: "local"
+  METRICS_PORT: "8080"
+  PPROF_ENABLED: "true"  # Enable profiling for debugging
+  REQUEST_TIMEOUT: "30s"
+
+secrets:
+  DATABASE_URL: "postgres://axiomx:localdev123@postgres:5432/trading?sslmode=disable"
+  KAFKA_BROKERS: "kafka:9092"
+  REDIS_ADDR: "redis:6379"
+  REDIS_PASSWORD: ""
+
+probes:
+  liveness:
+    enabled: true
+    initialDelaySeconds: 10  # Faster startup for local
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readiness:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+  
+  startup:
+    enabled: true
+    initialDelaySeconds: 0
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 20
