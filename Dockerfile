@@ -13,16 +13,16 @@ COPY . .
 # Build the API server
 RUN CGO_ENABLED=0 GOOS=linux go build -o /api-server ./cmd/api
 
-# Runtime stage
-FROM alpine:latest
+# Runtime stage - distroless static for smallest footprint
+FROM gcr.io/distroless/static-debian12:nonroot
 
-RUN apk --no-cache add ca-certificates
-
-WORKDIR /root/
+WORKDIR /app
 
 # Copy binary from builder
 COPY --from=builder /api-server .
 
 EXPOSE 8080
+
+USER nonroot:nonroot
 
 CMD ["./api-server"]

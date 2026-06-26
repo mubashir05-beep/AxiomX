@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	_ "net/http/pprof" // Enable pprof endpoints
 	"time"
@@ -334,15 +335,16 @@ func (s *Server) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Send welcome message
 	_, bidLevels, askLevels := s.processor.Snapshot()
+	welcomePayload := fmt.Sprintf(`{
+		"message": "Connected to trading engine",
+		"symbol": "BTC-USD",
+		"bid_levels": %d,
+		"ask_levels": %d
+	}`, bidLevels, askLevels)
 	welcomeMsg := broadcasterws.Message{
 		Type:      "welcome",
 		Timestamp: time.Now().UnixNano(),
-		Data: json.RawMessage(`{
-			"message": "Connected to trading engine",
-			"symbol": "BTC-USD",
-			"bid_levels": ` + string(rune(bidLevels)) + `,
-			"ask_levels": ` + string(rune(askLevels)) + `
-		}`),
+		Data:      json.RawMessage(welcomePayload),
 	}
 	conn.WriteJSON(welcomeMsg)
 }

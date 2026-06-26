@@ -1,35 +1,30 @@
 -- Initialize AxiomX database
--- POSTGRES_DB=axiomx already creates the database.
+-- Matches trade_store.go schema
 
--- Create trades table
 CREATE TABLE IF NOT EXISTS trades (
-    id SERIAL PRIMARY KEY,
-    symbol VARCHAR(10) NOT NULL,
-    price DECIMAL(20, 8) NOT NULL,
-    quantity DECIMAL(20, 8) NOT NULL,
-    side VARCHAR(4) NOT NULL,
-    buyer_id VARCHAR(50) NOT NULL,
-    seller_id VARCHAR(50) NOT NULL,
+    id TEXT PRIMARY KEY,
+    price_ticks BIGINT NOT NULL,
+    qty BIGINT NOT NULL,
+    maker_order_id TEXT NOT NULL,
+    taker_order_id TEXT NOT NULL,
+    ts_nano BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create orders table
 CREATE TABLE IF NOT EXISTS orders (
-    id SERIAL PRIMARY KEY,
-    symbol VARCHAR(10) NOT NULL,
+    id TEXT PRIMARY KEY,
+    symbol VARCHAR(12) NOT NULL,
     side VARCHAR(4) NOT NULL,
-    price DECIMAL(20, 8),
-    quantity DECIMAL(20, 8) NOT NULL,
-    filled_quantity DECIMAL(20, 8) DEFAULT 0,
-    status VARCHAR(20) NOT NULL,
-    trader_id VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    order_type VARCHAR(10) NOT NULL,
+    price_ticks BIGINT,
+    qty BIGINT NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'open',
+    user_id VARCHAR(50) NOT NULL DEFAULT 'default_user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create indices
-CREATE INDEX IF NOT EXISTS idx_trades_symbol ON trades(symbol);
-CREATE INDEX IF NOT EXISTS idx_trades_created_at ON trades(created_at);
-CREATE INDEX IF NOT EXISTS idx_orders_symbol ON orders(symbol);
-CREATE INDEX IF NOT EXISTS idx_orders_trader_id ON orders(trader_id);
+CREATE INDEX IF NOT EXISTS idx_trades_maker ON trades(maker_order_id);
+CREATE INDEX IF NOT EXISTS idx_trades_taker ON trades(taker_order_id);
+CREATE INDEX IF NOT EXISTS idx_trades_ts ON trades(ts_nano);
+CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id);
 CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);

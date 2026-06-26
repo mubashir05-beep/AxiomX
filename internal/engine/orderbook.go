@@ -155,7 +155,7 @@ func (ob *OrderBook) addResting(order Order) {
 func (ob *OrderBook) newTrade(priceTicks int64, qty int64, makerOrderID, takerOrderID string) Trade {
 	ob.tradeSeq++
 	return Trade{
-		ID:           fmt.Sprintf("t%d", ob.tradeSeq),
+		ID:           fmt.Sprintf("t%d-%d", time.Now().UnixNano(), ob.tradeSeq),
 		PriceTicks:   priceTicks,
 		Qty:          qty,
 		MakerOrderID: makerOrderID,

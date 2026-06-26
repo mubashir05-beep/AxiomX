@@ -36,7 +36,7 @@ services:
       retries: 5
 
   postgres:
-    image: postgres:15-alpine
+    image: postgres:15
     environment:
       POSTGRES_USER: axiomx
       POSTGRES_PASSWORD: axiomx123
@@ -61,8 +61,6 @@ services:
       KAFKA_BROKER: kafka:29092
       REDIS_ADDR: redis:6379
     depends_on:
-      postgres:
-        condition: service_healthy
       kafka:
         condition: service_healthy
       redis:
@@ -80,12 +78,13 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
+    user: "0:0"  # root UID to avoid distroless compat issues
     depends_on:
       - api
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:11.6.0
     ports:
       - "3000:3000"
     environment:

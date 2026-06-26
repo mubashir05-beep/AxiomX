@@ -55,11 +55,12 @@ func NewPublisher() *Publisher {
 	}
 
 	writer := &kafka.Writer{
-		Addr:         kafka.TCP(kafkaBroker),
-		Topic:        "trading-events",
-		Balancer:     &kafka.LeastBytes{},
-		RequiredAcks: kafka.RequireOne,
-		Async:        true, // Non-blocking for performance
+		Addr:                   kafka.TCP(kafkaBroker),
+		Topic:                  "trading-events",
+		Balancer:               &kafka.LeastBytes{},
+		RequiredAcks:           kafka.RequireOne,
+		Async:                  true,
+		AllowAutoTopicCreation: true,
 	}
 
 	fmt.Printf("Kafka publisher initialized: %s\n", kafkaBroker)

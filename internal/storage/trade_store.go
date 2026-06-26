@@ -66,7 +66,8 @@ func (ts *TradeStore) SaveTrade(trade engine.Trade) error {
 	if ts.db != nil {
 		query := `
 		INSERT INTO trades (id, price_ticks, qty, maker_order_id, taker_order_id, ts_nano)
-		VALUES ($1, $2, $3, $4, $5, $6)`
+		VALUES ($1, $2, $3, $4, $5, $6)
+		ON CONFLICT (id) DO NOTHING`
 		_, err := ts.db.Exec(query, trade.ID, trade.PriceTicks, trade.Qty,
 			trade.MakerOrderID, trade.TakerOrderID, trade.TsNano)
 		return err
