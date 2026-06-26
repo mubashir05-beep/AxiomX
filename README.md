@@ -68,7 +68,7 @@ matching_latency P95:    22.4 �s
 
 ## Architecture
 
-<img src="docs/axiomx-architecture.svg" alt="AxiomX Architecture" width="100%"/>
+![AxiomX Architecture](docs/axiomx-architecture.svg)
 
 ### Grafana Dashboard
 
