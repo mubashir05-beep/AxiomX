@@ -74,7 +74,7 @@ matching_latency P95:    22.4 �s
 
 Live metrics during 251K-request load test at 100 concurrent users:
 
-<img src="docs/screenshots/grafana-order-graphs.png" alt="Grafana Dashboard" width="100%"/>
+<img src="docs/screenshots/axiomx-grafana-order-graphs.png" alt="Grafana Dashboard" width="100%"/>
 
 ### Prometheus Targets
 
