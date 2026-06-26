@@ -17,26 +17,20 @@
     </marker>
   </defs>
   <rect width="900" height="660" fill="url(#bg)" rx="10"/>
-  <!-- Title -->
   <text x="450" y="36" text-anchor="middle" fill="#e6edf3" font-size="20" font-weight="800" letter-spacing="1">AXIOMX ARCHITECTURE</text>
   <line x1="380" y1="44" x2="520" y2="44" stroke="#2d7af7" stroke-width="2" opacity="0.5"/>
-  <!-- CLIENT -->
   <rect x="300" y="68" width="300" height="40" rx="20" fill="#161e29" stroke="#253040"/>
   <text x="450" y="93" text-anchor="middle" fill="#9ba3b0" font-size="13">REST API Clients  &  WebSocket Browsers</text>
-  <!-- Arrow Client -> API -->
   <line x1="450" y1="108" x2="450" y2="132" stroke="#4d90e6" stroke-width="2" marker-end="url(#a)"/>
-  <!-- API SERVER -->
   <rect x="200" y="136" width="500" height="62" rx="10" fill="url(#apiGrad)"/>
   <text x="450" y="160" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">Go API Server  |  Port 8080</text>
   <text x="450" y="182" text-anchor="middle" fill="#b0caf0" font-size="11">REST Endpoints  |  WebSocket Hub  |  Prometheus /metrics  |  Structured JSON Logs</text>
-  <!-- Arrows from API -->
   <line x1="290" y1="198" x2="170" y2="248" stroke="#4d90e6" stroke-width="1.5" marker-end="url(#a)"/>
   <line x1="450" y1="198" x2="450" y2="248" stroke="#4d90e6" stroke-width="1.5" marker-end="url(#a)"/>
   <line x1="610" y1="198" x2="730" y2="248" stroke="#4d90e6" stroke-width="1.5" marker-end="url(#a)"/>
   <text x="160" y="235" text-anchor="middle" fill="#5a6a80" font-size="10">Event Stream</text>
   <text x="450" y="235" text-anchor="middle" fill="#5a6a80" font-size="10">Matching</text>
   <text x="740" y="235" text-anchor="middle" fill="#5a6a80" font-size="10">Cache + Risk</text>
-  <!-- KAFKA -->
   <rect x="60" y="252" width="220" height="95" rx="10" fill="#1b1f28" stroke="#e87b35" stroke-width="1.5"/>
   <rect x="60" y="252" width="220" height="28" rx="10" fill="#e87b35"/>
   <rect x="60" y="270" width="220" height="10" fill="#e87b35"/>
@@ -44,13 +38,11 @@
   <text x="170" y="300" text-anchor="middle" fill="#c0c6cf" font-size="11">trading-events topic</text>
   <text x="170" y="318" text-anchor="middle" fill="#6b7280" font-size="10">Async producer (non-blocking)</text>
   <text x="170" y="336" text-anchor="middle" fill="#6b7280" font-size="10">Event sourcing & audit trail</text>
-  <!-- ENGINE -->
   <rect x="310" y="252" width="280" height="95" rx="10" fill="url(#engineGrad)"/>
   <text x="450" y="282" text-anchor="middle" fill="#c0daf7" font-size="14" font-weight="700">Matching Engine  (Actor Model)</text>
   <text x="450" y="302" text-anchor="middle" fill="#a0b8d0" font-size="11">Price-Time Priority Order Book</text>
   <text x="450" y="320" text-anchor="middle" fill="#6b8098" font-size="10">Dedicated goroutine  |  2048-buffer channel</text>
   <text x="450" y="338" text-anchor="middle" fill="#6b8098" font-size="10">Sub-10us matching  |  sync.RWMutex</text>
-  <!-- REDIS + RISK -->
   <rect x="620" y="252" width="220" height="95" rx="10" fill="#1b1f28" stroke="#d73a49" stroke-width="1.5"/>
   <rect x="620" y="252" width="220" height="28" rx="10" fill="#d73a49"/>
   <rect x="620" y="270" width="220" height="10" fill="#d73a49"/>
@@ -58,15 +50,12 @@
   <text x="730" y="300" text-anchor="middle" fill="#c0c6cf" font-size="11">Order Book Cache  (10s TTL)</text>
   <text x="730" y="318" text-anchor="middle" fill="#6b7280" font-size="10">Trade counter  |  CQRS reads</text>
   <text x="730" y="336" text-anchor="middle" fill="#6b7280" font-size="10">Risk: position limits & val</text>
-  <!-- POSTGRES -->
   <rect x="320" y="375" width="260" height="55" rx="10" fill="#1b1f28" stroke="#2f6f9f" stroke-width="1.5"/>
   <rect x="320" y="375" width="260" height="28" rx="10" fill="#2f6f9f"/>
   <rect x="320" y="393" width="260" height="10" fill="#2f6f9f"/>
   <text x="450" y="394" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">PostgreSQL 15</text>
   <text x="450" y="418" text-anchor="middle" fill="#c0c6cf" font-size="11">trades table  |  ACID  |  B-tree indexes</text>
-  <!-- Arrow from Engine to PG -->
   <line x1="450" y1="347" x2="450" y2="375" stroke="#4d90e6" stroke-width="1.5" marker-end="url(#a)"/>
-  <!-- OBSERVABILITY -->
   <rect x="40" y="460" width="820" height="80" rx="10" fill="#141a24" stroke="#253040" stroke-width="1"/>
   <text x="450" y="486" text-anchor="middle" fill="#b0b8c4" font-size="13" font-weight="700">OBSERVABILITY STACK</text>
   <rect x="60" y="500" width="245" height="28" rx="6" fill="#1c2330"/>
@@ -78,9 +67,7 @@
   <rect x="596" y="500" width="245" height="28" rx="6" fill="#1c2330"/>
   <text x="718" y="519" text-anchor="middle" fill="#7ab8f5" font-size="12" font-weight="600">Loki</text>
   <text x="718" y="532" text-anchor="middle" fill="#6b7280" font-size="9">centralized JSON logs</text>
-  <!-- INFRA -->
   <rect x="80" y="568" width="740" height="40" rx="10" fill="#0e1219" stroke="#1a2230"/>
   <text x="450" y="593" text-anchor="middle" fill="#5a6a80" font-size="11">Docker Compose  |  Kubernetes (EKS)  |  Helm Charts  |  Terraform (AWS VPC, EKS, RDS, MSK, ElastiCache)  |  Ansible</text>
-  <!-- Footer -->
   <text x="450" y="642" text-anchor="middle" fill="#1e2838" font-size="10">Built by Mubashir Khan  |  github.com/mubashir05-beep/AxiomX  |  June 2026</text>
 </svg>
